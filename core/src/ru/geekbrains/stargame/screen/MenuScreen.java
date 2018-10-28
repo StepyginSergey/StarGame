@@ -39,7 +39,7 @@ public class MenuScreen extends Base2DScreen {
             pos.set(touch);
         }
         batch.begin();
-        batch.draw(img, pos.x, pos.y, 0.5f, 0.5f);
+        batch.draw(img, pos.x, pos.y, 5f, 5f);
         batch.end();
 
     }
