@@ -11,7 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.stargame.math.MatrixUtils;
 import ru.geekbrains.stargame.math.Rect;
-
 public class Base2DScreen implements Screen, InputProcessor {
 
     protected SpriteBatch batch;
@@ -51,16 +50,16 @@ public class Base2DScreen implements Screen, InputProcessor {
         screenBounds.setBottom(0);
 
         float aspect = width / (float) height;
-        // Задана система координат размером 42 согластно домашнему заданию
-        worldBounds.setHeight(42f);
-        worldBounds.setWidth(42f * aspect);
-
-        //Сохранены значения из урока
-        //worldBounds.setHeight(1f);
-        //worldBounds.setWidth(1f * aspect);
+        worldBounds.setHeight(1f);
+        worldBounds.setWidth(1f*aspect);
         MatrixUtils.calcTransitionMatrix(worldToGl, worldBounds, glBounds);
         batch.setProjectionMatrix(worldToGl);
         MatrixUtils.calcTransitionMatrix(screenToWorld, screenBounds, worldBounds);
+        resize(worldBounds);
+    }
+
+    public void resize(Rect worldBounds) {
+
     }
 
     @Override
