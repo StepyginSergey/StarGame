@@ -1,5 +1,6 @@
 package ru.geekbrains.stargame.base;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -24,7 +25,7 @@ public class Base2DScreen implements Screen, InputProcessor {
 
     private Vector2 touch;
 
-    @Override
+        @Override
     public void show() {
         System.out.println("show");
         this.batch = new SpriteBatch();
@@ -41,6 +42,8 @@ public class Base2DScreen implements Screen, InputProcessor {
     public void render(float delta) {
 
     }
+
+
 
     @Override
     public void resize(int width, int height) {
