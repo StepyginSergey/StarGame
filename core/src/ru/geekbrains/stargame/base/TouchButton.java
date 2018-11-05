@@ -5,44 +5,39 @@ import com.badlogic.gdx.math.Vector2;
 
 public class TouchButton extends Sprite {
 
-    private int pointer;
-    private boolean pressed;
-    private float pressScale;
-    private ActionListener actionListener;
+        private static final float PRESS_SCALE = 0.9f;
 
+        private int pointer;
+        private boolean isPressed;
+        private ActionListener actionListener;
 
-    public TouchButton(TextureRegion region, ActionListener actionListener, float pressScale) {
-        super(region);
-        this.pressScale = pressScale;
-        this.pressed = false;
-        this.actionListener = actionListener;
-    }
-
-    @Override
-    public boolean touchDown(Vector2 touch, int pointer) {
-        if (pressed  || !isMe(touch)){
-            return false;
+        public TouchButton(TextureRegion region, ActionListener actionListener) {
+            super(region);
+            this.actionListener = actionListener;
+            setHeightProportion(0.15f);
         }
-        this.pointer = pointer;
-        scale = pressScale;
-        this.pressed = true;
 
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(Vector2 touch, int pointer) {
-        if(this.pointer != pointer || !pressed){
+        @Override
+        public boolean touchDown(Vector2 touch, int pointer) {
+            if (isPressed || !isMe(touch)) {
+                return false;
+            }
+            this.pointer = pointer;
+            this.scale = PRESS_SCALE;
+            this.isPressed = true;
             return false;
         }
 
-        if(isMe(touch)){
-            actionListener.actionPerformed(this);
-            return true;
+        @Override
+        public boolean touchUp(Vector2 touch, int pointer) {
+            if (this.pointer != pointer || !isPressed) {
+                return false;
+            }
+            if (isMe(touch)) {
+                actionListener.actionPerformed(this);
+            }
+            isPressed = false;
+            scale = 1f;
+            return false;
         }
-        this.pressed = false;
-        this.scale = 1f;
-
-        return false;
     }
-}

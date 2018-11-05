@@ -1,6 +1,5 @@
 package ru.geekbrains.stargame.base;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -8,10 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-
-
 import ru.geekbrains.stargame.math.MatrixUtils;
 import ru.geekbrains.stargame.math.Rect;
+
 public class Base2DScreen implements Screen, InputProcessor {
 
     protected SpriteBatch batch;
@@ -25,7 +23,7 @@ public class Base2DScreen implements Screen, InputProcessor {
 
     private Vector2 touch;
 
-        @Override
+    @Override
     public void show() {
         System.out.println("show");
         this.batch = new SpriteBatch();
@@ -42,8 +40,6 @@ public class Base2DScreen implements Screen, InputProcessor {
     public void render(float delta) {
 
     }
-
-
 
     @Override
     public void resize(int width, int height) {

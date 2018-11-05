@@ -20,9 +20,7 @@ public class MenuScreen extends Base2DScreen implements ActionListener {
 
     private static final int STAR_COUNT = 256;
 
-    private static final float PRESS_SCALE = 0.9f;
-    private static final float EXIT_BUTTON_HEIGHT = 0.15f;
-    private static final float PLAY_BUTTON_HEIGHT = 0.2f;
+    private Game game;
 
     private Texture bgTexture;
     private Background background;
@@ -30,13 +28,10 @@ public class MenuScreen extends Base2DScreen implements ActionListener {
     private TextureAtlas textureAtlas;
     private Star[] stars;
 
-    private PlayButton btPlay;
-    private ExitButton btExit;
+    private ExitButton buttonExit;
+    private PlayButton buttonPlay;
 
-    private Game game;
-
-
-    public MenuScreen(Game game){
+    public MenuScreen(Game game) {
         super();
         this.game = game;
     }
@@ -51,11 +46,8 @@ public class MenuScreen extends Base2DScreen implements ActionListener {
         for (int i = 0; i < stars.length; i++) {
             stars[i] = new Star(textureAtlas);
         }
-
-        btExit = new ExitButton(textureAtlas, this, PRESS_SCALE);
-        btExit.setHeightProportion(EXIT_BUTTON_HEIGHT);
-        btPlay = new PlayButton(textureAtlas, this, PRESS_SCALE);
-        btPlay.setHeightProportion(PLAY_BUTTON_HEIGHT);
+        buttonExit = new ExitButton(textureAtlas, this);
+        buttonPlay = new PlayButton(textureAtlas, this);
     }
 
     @Override
@@ -80,8 +72,8 @@ public class MenuScreen extends Base2DScreen implements ActionListener {
         for (int i = 0; i < stars.length; i++) {
             stars[i].draw(batch);
         }
-        btPlay.draw(batch);
-        btExit.draw(batch);
+        buttonExit.draw(batch);
+        buttonPlay.draw(batch);
         batch.end();
     }
 
@@ -91,8 +83,8 @@ public class MenuScreen extends Base2DScreen implements ActionListener {
         for (int i = 0; i < stars.length; i++) {
             stars[i].resize(worldBounds);
         }
-        btExit.resize(worldBounds);
-        btPlay.resize(worldBounds);
+        buttonExit.resize(worldBounds);
+        buttonPlay.resize(worldBounds);
     }
 
     @Override
@@ -104,27 +96,25 @@ public class MenuScreen extends Base2DScreen implements ActionListener {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-        btExit.touchDown(touch,pointer);
-        btPlay.touchDown(touch, pointer);
+        buttonExit.touchDown(touch, pointer);
+        buttonPlay.touchDown(touch, pointer);
         return false;
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
-        btExit.touchUp(touch,pointer);
-        btPlay.touchUp(touch, pointer);
-        return false;
+        buttonExit.touchUp(touch, pointer);
+        buttonPlay.touchUp(touch, pointer);
+        return super.touchUp(touch, pointer);
     }
 
     @Override
     public void actionPerformed(Object src) {
-        if(src == btExit){
+        if (src == buttonExit) {
             Gdx.app.exit();
-        }else if(src == btPlay){
-            //game.getScreen(new GameScreen());
-        }
-        else {
-            throw new RuntimeException("Unknown source");
+        } else if (src == buttonPlay) {
+            game.setScreen(new GameScreen());
         }
     }
 }
+

@@ -7,15 +7,13 @@ import ru.geekbrains.stargame.math.Rect;
 
 public class ExitButton extends TouchButton {
 
-    public ExitButton(TextureAtlas atlas, ActionListener actionListener, float pressScale) {
-        super(atlas.findRegion("btExit"), actionListener, pressScale);
+    public ExitButton(TextureAtlas atlas, ActionListener actionListener) {
+        super(atlas.findRegion("btExit"), actionListener);
     }
-
 
     @Override
     public void resize(Rect worldBounds) {
         setBottom(worldBounds.getBottom());
         setRight(worldBounds.getRight());
-        //super.resize(worldBounds);
     }
 }

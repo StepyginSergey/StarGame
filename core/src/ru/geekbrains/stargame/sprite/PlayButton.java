@@ -8,8 +8,8 @@ import ru.geekbrains.stargame.math.Rect;
 
 public class PlayButton extends TouchButton {
 
-    public PlayButton(TextureAtlas atlas, ActionListener actionListener, float pressScale) {
-        super(atlas.findRegion("btPlay"), actionListener, pressScale);
+    public PlayButton(TextureAtlas atlas, ActionListener actionListener) {
+        super(atlas.findRegion("btPlay"), actionListener);
     }
 
     @Override
