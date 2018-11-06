@@ -32,6 +32,18 @@ public class MainShip extends Sprite {
     @Override
     public void update(float delta) {
         pos.mulAdd(v, delta);
+        checkAndHandleBounds();
+    }
+
+    private void checkAndHandleBounds(){
+        if (getRight() > worldBounds.getRight()) {
+            setRight(worldBounds.getRight());
+            stop();
+        }
+        if(getLeft() < worldBounds.getLeft()){
+            setLeft(worldBounds.getLeft());
+            stop();
+        }
     }
 
     @Override
@@ -42,12 +54,18 @@ public class MainShip extends Sprite {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
-        return super.touchDown(touch, pointer);
+        if(touch.x > worldBounds.pos.x){
+            moveRight();
+        }else{
+            moveLeft();
+        }
+        return false;
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
-        return super.touchUp(touch, pointer);
+        stop();
+        return false;
     }
 
 
