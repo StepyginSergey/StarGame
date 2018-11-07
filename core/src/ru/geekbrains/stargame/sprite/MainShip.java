@@ -16,6 +16,10 @@ public class MainShip extends Sprite {
     private boolean pressedLeft;
     private boolean pressedRight;
 
+    private final static int INVALID_POINTER = -1;
+    private int leftPointer = INVALID_POINTER;
+    private int rightPointer = INVALID_POINTER;
+
     private BulletPool bulletPool;
 
     private TextureAtlas atlas;
@@ -55,8 +59,16 @@ public class MainShip extends Sprite {
     @Override
     public boolean touchDown(Vector2 touch, int pointer) {
         if(touch.x > worldBounds.pos.x){
+            if(rightPointer != INVALID_POINTER){
+                return false;
+            }
+            rightPointer = pointer;
             moveRight();
         }else{
+            if(leftPointer != INVALID_POINTER){
+                return false;
+            }
+            leftPointer = pointer;
             moveLeft();
         }
         return false;
@@ -64,6 +76,21 @@ public class MainShip extends Sprite {
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer) {
+        if(pointer == leftPointer){
+            leftPointer= INVALID_POINTER;
+            if(rightPointer != INVALID_POINTER){
+                moveRight();
+            }else{
+                stop();
+            }
+        }else if (pointer == rightPointer){
+            rightPointer = INVALID_POINTER;
+            if(leftPointer != INVALID_POINTER){
+                moveLeft();
+            }else{
+                stop();
+            }
+        }
         stop();
         return false;
     }
