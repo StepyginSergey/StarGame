@@ -7,20 +7,22 @@ import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.stargame.base.Ship;
 import ru.geekbrains.stargame.math.Rect;
 import ru.geekbrains.stargame.pool.BulletPool;
+import ru.geekbrains.stargame.pool.ExplosionPool;
 
 
 public class Enemy extends Ship {
 
-    private enum State { DESCENT, FIGHT };
+    private enum State { DESCENT, FIGHT }
 
     private Vector2 v0 = new Vector2();
 
     private State state;
     private Vector2 descentV = new Vector2(0, -0.15f);
 
-    public Enemy(BulletPool bulletPool, Rect worldBounds, Sound shootSound) {
+    public Enemy(BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds, Sound shootSound) {
         super(shootSound);
         this.bulletPool = bulletPool;
+        this.explosionPool = explosionPool;
         this.worldBounds = worldBounds;
         this.v.set(v0);
     }
@@ -44,6 +46,7 @@ public class Enemy extends Ship {
                     reloadTimer = 0f;
                 }
                 if (getBottom() < worldBounds.getBottom()) {
+                    boom();
                     destroy();
                 }
                 break;
@@ -51,15 +54,15 @@ public class Enemy extends Ship {
     }
 
     public void set(
-        TextureRegion[] regions,
-        Vector2 v0,
-        TextureRegion bulletRegion,
-        float bulletHeight,
-        float bulletVY,
-        int bulletDamage,
-        float reloadInterval,
-        float height,
-        int hp
+            TextureRegion[] regions,
+            Vector2 v0,
+            TextureRegion bulletRegion,
+            float bulletHeight,
+            float bulletVY,
+            int bulletDamage,
+            float reloadInterval,
+            float height,
+            int hp
     ) {
         this.regions = regions;
         this.v0.set(v0);
@@ -74,4 +77,20 @@ public class Enemy extends Ship {
         v.set(descentV);
         state = State.DESCENT;
     }
+
+    public boolean isBulletCollision(Rect bullet) {
+        return !(bullet.getRight() < getLeft()
+                || bullet.getLeft() > getRight()
+                || bullet.getBottom() > getTop()
+                || bullet.getTop() < pos.y
+        );
+    }
+
+    @Override
+    public void destroy() {
+        boom();
+        hp = 0;
+        super.destroy();
+    }
 }
+
