@@ -93,4 +93,3 @@ public class Enemy extends Ship {
         super.destroy();
     }
 }
-
